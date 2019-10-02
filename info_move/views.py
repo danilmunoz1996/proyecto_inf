@@ -5,7 +5,9 @@ import pytz
 
 # Create your views here.
 def home(request):
-	return render(request, 'home.html')
+	return render(request, 'index.html')
+def ListaConductores(request):
+	return render(request, 'Lista.html')
 def crear_valoracion(request):
 	if request.method == 'POST':
 		if(request.POST.get("cancelar") is not None):
