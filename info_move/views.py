@@ -5,5 +5,8 @@ from django.http import HttpResponse
 def home(request):
 	return render(request, 'index.html')
 
-def ListaConductores(request):
+def ListaMicros(request):
 	return render(request, 'Lista.html')
+
+def ComentariosChofer(request):
+	return render(request, 'CometariosChofer.html')
