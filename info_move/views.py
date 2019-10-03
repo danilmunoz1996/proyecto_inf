@@ -7,8 +7,13 @@ from info_move.forms import *
 # Create your views here.
 def home(request):
 	return render(request, 'index.html')
-def ListaConductores(request):
+
+def ListaMicros(request):
 	return render(request, 'Lista.html')
+
+def ComentariosChofer(request):
+	return render(request, 'CometariosChofer.html')
+	
 def crear_valoracion(request):
 	if request.method == 'POST':
 		if(request.POST.get("cancelar") is not None):
@@ -76,4 +81,3 @@ def filtrar_micro_por_chofer(pk,hora_,fecha_):
 	for p in posibles_micros:
 		if(p.itinerario.inicio >= hora_ and p.itinerario.fin < hora_):
 			return p.itinerario.micro
-
