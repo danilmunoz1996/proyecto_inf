@@ -1,0 +1,35 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'perfil/css/style.css' %}">
+<section class="engine"><a href="">free amp template</a></section><section class="header6 cid-rDBUIeG48A mbr-fullscreen mbr-parallax-background" id="header6-h">
+
+	 <!-- background esta en carpeta mobirise/css --    .cid-rDBUIeG48A {
+  background-image: url("../../../assets/images/background4.jpg"); -->
+
+  <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(35, 35, 35);">
+  </div>
+
+<div class="container">
+  <div class="main">  
+    <div class="container" style="background-color:rgba(80, 89, 123 ,0.4)">    
+      <div class="profile_picture">
+        <a><img src={{perfil.1}}/> </a>             
+          <div class="profile_picture_name">
+            <h2>{{perfil.0}}</h2>
+          </div>
+      </div>
+      <div class="articles_list">
+        <ul>
+          <li><a href="#" class="red"><img src="{% static '/perfil/images/favourite.png'%}" alt="" /> {{perfil.2}}</a></li>
+          <li><a href="#" class="purple"> <img src="{% static '/perfil/images/comments.png'%}" alt="" /> {{perfil.3}}</a></li>
+          <li><a href="#" class="yellow"> <img src="{% static '//perfil/images/events.png'%}" alt="" />{{perfil.4}}</a></li>
+          <div class="clear"></div> 
+        </ul>
+      </div>
+    </div>
+  </div>
+<div class="clear"></div>
+</div>
+</section>
+{% endblock %}

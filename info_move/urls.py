@@ -1,7 +1,12 @@
 from django.urls import path
-from . import views
+from django.conf.urls import url, include
+from .views import * 
 urlpatterns = [
-    path('', views.home, name = 'home'),
-    path('ListaMicros', views.ListaMicros, name = 'ListaMicros'),
-    path('ComentariosChofer', views.ComentariosChofer, name = 'ComentariosChofer'),
+    path('', home, name = 'home'),
+    path('ListaMicros', ListaMicros, name = 'ListaMicros'),
+    path('ComentariosChofer', ComentariosChofer, name = 'ComentariosChofer'),
+    path('valorar', CrearValoracion, name = 'CrearValoracion'),
+    url(r'^usuario/(?P<pk>\d+)/$', VerPerfilUsuario, name='VerPerfilUsuario'),
+    url('conductor/(?P<pk>\d+)', VerPerfilConductor, name='VerPerfilConductor'),
+    path('debugger',debugger,name='debugger'),
 ]

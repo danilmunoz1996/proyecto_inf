@@ -13,45 +13,53 @@ def ListaMicros(request):
 
 def ComentariosChofer(request):
 	return render(request, 'CometariosChofer.html')
-	
-def crear_valoracion(request):
+
+def CrearValoracion(request):
 	if request.method == 'POST':
 		if(request.POST.get("cancelar") is not None):
 			return redirect('cancelar_crear_comentario')
 		form = ValoracionForm(request.POST)
-		if request.POST.get("confirmar"):
-			if form.is_valid():
-				valoracion = Valoracion()
-				valoracion.puntaje = form.cleaned_data['puntaje']
-				valoracion.comentario= form.cleaned_data['comentario']
-				usuario = request.user
-				#usuario = Usuario.objects.get(id=usuario.identificador)
-				valoracion.emisor = usuario
-				conductor = Conductor.objects.get(id=request.POST.get("conductor_id"))
-				timezone = pytz.timezone('Chile/Continental')
-				actual = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y %H:%M:%S") , "%d/%m/%Y %H:%M:%S")
-				valoracion.receptor = conductor
-				valoracion.fecha = actual
-				valoracion.save()
-			else:
+		if form.is_valid():
+			valoracion = Valoracion()
+			valoracion.puntaje = form.cleaned_data['puntaje']
+			valoracion.comentario= form.cleaned_data['comentario']
+			patente= form.cleaned_data['patente']
+			valoracion.emisor = request.user
+			timezone = pytz.timezone('Chile/Continental')
+			actual = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y %H:%M:%S") , "%d/%m/%Y %H:%M:%S")
+			conductor = patente_to_conductor(patente,datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y"),actual.hour)
+			if(conductor == None):
 				mensaje = "Ha ocurrido un error, intenta publicar tu valoración nuevamente"
 				form = ValoracionForm()
 				return render(request,'alguna_template_de_error',{'form':form, 'error': mensaje})
+			valoracion.receptor = conductor
+			valoracion.fecha = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y")
+			valoracion.save()
 			return render(request,'template_de_exito')
+		else:
+			mensaje = "Ha ocurrido un error, intenta publicar tu valoración nuevamente"
+			form = ValoracionForm()
+			return render(request,'alguna_template_de_error',{'form':form, 'error': mensaje})
 	else:
 		form = ValoracionForm()
 		return render(request, 'emitir_valoracion.html', {'form': form} )
-
+def patente_to_conductor(patente,fecha,hora):
+	itinerario = Itinerario.objects.filter(micro=patente)
+	for i in itinerario:
+		if(i.inicio <= hora and i.fin > hora):
+			conduce = Conduce.objects.filter(itinerario = i.identificador).filter(fecha = fecha)
+			if(len(conduce) != 0):
+				return conduce[0].conductor
+	return None
 #@login_required()
-def ver_perfil_usuario(request,pk):
+def VerPerfilUsuario(request,pk):
 	info_perfil = []
 	try:
-		us = Usuario.objects.get(id = pk)
+		us = Usuario.objects.get(rut = pk)
 		info_perfil.append(us.nombre_usuario)
 		info_perfil.append(us.nombre_completo)
-		info_perfil.append(us.correo)
 		val = Valoracion.objects.filter(emisor=pk)
-		info_perfil.append(val.size())
+		info_perfil.append(len(val))
 		#si val.size() no funciona
 		#valoraciones = 0	
 		#for v in val:		
@@ -61,23 +69,35 @@ def ver_perfil_usuario(request,pk):
 		return render(request, 'perfil_error.html')
 	return render(request, 'perfil_usuario.html', {'perfil': info_perfil})
 
+def debugger(request):
+	return render(request, 'perfil_usuario.html', {})
+
+def chofer_to_micro_actual(chofer):
+	timezone = pytz.timezone('Chile/Continental')
+	hoy = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y")
+	hora = datetime.strptime(datetime.now(tz=timezone).strftime("%H") , "%H")
+	conduce = Conduce.objects.filter(fecha = hoy).filter(conductor = chofer.identificador)
+	for c in conduce:
+		if(c.itinerario.inicio <= hora.hour and c.itinerario.fin > hora.hour):
+			lol = c.itinerario.micro
+			return c.itinerario.micro.patente
+	return None
+
 #@login_required()
-def ver_perfil_conductor(request,pk):
+def VerPerfilConductor(request,pk):
 	info_conductor = []
 	try:
-		conductor = Conductor.objects.get(id = pk)
+		conductor = Conductor.objects.get(identificador = pk)
 		info_conductor.append(conductor.nombre)
 		info_conductor.append(conductor.foto)
 		info_conductor.append(conductor.puntaje)
-		#info_conductor.append(filtrar_micro_por_chofer)
-		val = Valoracion.objects.filter(receptor=pk).order_by('fecha')
+		val = Valoracion.objects.filter(receptor=pk)
+		info_conductor.append(len(val))
+		micro = chofer_to_micro_actual(conductor)
+		if micro == None:
+			info_conductor.append('---')
+		else:
+			info_conductor.append(chofer_to_micro_actual(conductor))
 	except:
 		return render(request, 'perfil_error.html')
-	return render(request, 'perfil_conductor.html', {'perfil': info_perfil, 'valoraciones': val})
-
-def filtrar_micro_por_chofer(pk,hora_,fecha_):
-	conductor = Conductor.objects.get(id = pk)
-	posibles_micros = Conduce.objects.filter(fecha=fecha_).filter(conductor=pk)
-	for p in posibles_micros:
-		if(p.itinerario.inicio >= hora_ and p.itinerario.fin < hora_):
-			return p.itinerario.micro
+	return render(request, 'perfil_conductor.html', {'perfil': info_conductor, 'valoraciones': val})
