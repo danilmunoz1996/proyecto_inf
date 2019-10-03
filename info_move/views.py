@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime, timedelta
 import pytz
+from info_move.forms import *
 
 # Create your views here.
 def home(request):
@@ -34,9 +35,9 @@ def crear_valoracion(request):
 			return render(request,'template_de_exito')
 	else:
 		form = ValoracionForm()
-		return render(request, 'template_de_crear_comentario', {'form': form} )
+		return render(request, 'emitir_valoracion.html', {'form': form} )
 
-@login_required()
+#@login_required()
 def ver_perfil_usuario(request,pk):
 	info_perfil = []
 	try:
@@ -55,7 +56,7 @@ def ver_perfil_usuario(request,pk):
 		return render(request, 'perfil_error.html')
 	return render(request, 'perfil_usuario.html', {'perfil': info_perfil})
 
-@login_required()
+#@login_required()
 def ver_perfil_conductor(request,pk):
 	info_conductor = []
 	try:
@@ -73,6 +74,6 @@ def filtrar_micro_por_chofer(pk,hora_,fecha_):
 	conductor = Conductor.objects.get(id = pk)
 	posibles_micros = Conduce.objects.filter(fecha=fecha_).filter(conductor=pk)
 	for p in posibles_micros:
-		if(p.itinerario.inicio >= hora_ && p.itinerario.fin < hora_):
+		if(p.itinerario.inicio >= hora_ and p.itinerario.fin < hora_):
 			return p.itinerario.micro
 
