@@ -93,7 +93,7 @@ def VerPerfilUsuario(request,pk):
 	return render(request, 'perfil_usuario.html', {'perfil': info_perfil})
 
 def debugger(request):
-	return render(request, 'perfil_usuario.html', {})
+	return render(request, 'registro.html', {})
 
 def chofer_to_micro_actual(chofer):
 	timezone = pytz.timezone('Chile/Continental')
