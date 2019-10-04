@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="engine"><a href=""></a></section><section class="services3 cid-rDw8gf4TDm" id="services3-5">
+    
+    <!--Overlay-->
+    
+    <!--Container-->
+    <div class="container">
+        <div class="row">
+            <!--Titles-->
+            <div class="title pb-5 col-12">
+                <h2 class="align-left mbr-fonts-style display-1">
+                    Opiniones</h2>
+                
+            </div>
+            
+            <!--Card-1-->
+            <div class="card px-3 col-12 col-md-6">
+                <div class="card-wrapper media-container-row media-container-row">
+                    <div class="card-box">
+                        <div class="top-line pb-1">
+                           
+
+<form method="post" action="/getdata/">
+    <table>
+        <tr>
+            <td>Nombre Conductor:</td>
+            <td><input type="text" name="name"/></td>
+        </tr>
+        <tr>
+            <td>email:</td>
+            <td><input type="email" name="email"/></td>
+        </tr>
+        <tr>
+            <td>Telefono:</td>
+            <td><input type="text" name="phone"/></td>
+        </tr>
+         <tr>
+            <td>Comentario:</td>
+            <td><input type="text" name="comment"/></td>
+        </tr>
+        <tr>
+            <td>
+ 
+            </td>
+            <td>
+                <button>enviar</button>
+            </td>
+        </tr>
+    </table>
+</form>
+                           
+</section>
+
+
+
+
+
+{% endblock %}
