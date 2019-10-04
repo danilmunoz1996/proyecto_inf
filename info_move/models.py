@@ -154,6 +154,5 @@ class SearchResultsView(ListView):
 
 	def getqueryset(self):
 		query = self.request.GET.get('q')
-		object_list = Empresa.objects.filter(nombre = 'San Remo')
-		print("len: ", len(object_list))
+		object_list = Empresa.objects.filter(Q(nombre__icontanins = query))
 		return object_list
