@@ -10,6 +10,7 @@ urlpatterns = [
     path('Comentar', Comentar, name = 'Comentar'),
 
     path('valorar', CrearValoracion, name = 'CrearValoracion'),
+    path('busqueda_linea', SearchResultsView.as_view(), name = 'buscar_linea'),
     url(r'^usuario/(?P<pk>\d+)/$', VerPerfilUsuario, name='VerPerfilUsuario'),
     url('conductor/(?P<pk>\d+)', VerPerfilConductor, name='VerPerfilConductor'),
     path('debugger',debugger,name='debugger'),

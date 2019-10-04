@@ -10,10 +10,18 @@
 
     <div class="container">
         <div class="row justify-content-md-center">
-            <div class="mbr-white col-md-10">
-                
-                
-                
+            <div class="mbr-white col-md-10 align center">
+                <div class = "btn-default">
+                  <div class="search">
+                    <form class="search-form" action = "{% url 'buscar_linea' %}" method = 'get'>
+                      <input type="text" name = "q" placeholder="Ingresa una línea de micros. Ej: Las Galaxias">
+                      <input type="submit" value="Buscar">
+                    </form>
+                  </div>
+                  <button type = "button" href = ""class="btn btn-primary">Búsca tu micro por patente</button>
+                  <button type = "button" class="btn btn-primary">Líneas de Micros</button>
+                  <button type = "button" class="btn btn-primary">Líneas de Micros</button>
+                </div>
             </div>
         </div>
     </div>
