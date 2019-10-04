@@ -9,7 +9,6 @@
 
   <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(35, 35, 35);">
   </div>
-
 <div class="container">
   <div class="main">  
     <div class="container" style="background-color:rgba(80, 89, 123 ,0.4)">    
@@ -29,7 +28,61 @@
       </div>
     </div>
   </div>
+<section class="engine"><a href="">site maker</a></section><section class="testimonials4 cid-rDBPEO4kX3" id="testimonials4-f">
+  <h2 class="pb-3 mbr-fonts-style mbr-white align-center display-2"><br>Comentarios</h2>
+    <div class="col-md-10 testimonials-container"> 
+    {% for v in valoraciones %}
+    <div class="testimonials-item">
+        <div class="user row">
+          <div class="col-lg-3 col-md-4">
+            <div class="user_image">
+              <img src="{% static '/images/face2.jpg' %}">
+            </div>
+            <p>&nbsp &nbsp &nbsp {{v.fecha}}</p>
+          </div>
+          <div class="testimonials-caption col-lg-9 col-md-8">
+            <div class="user_text ">
+              <p class="mbr-fonts-style  display-7">
+                 <em>{{v.comentario}}</em>
+              </p>
+            </div>
+            <div class="user_name mbr-bold mbr-fonts-style align-left pt-3 display-7">{{v.receptor.nombre}}</div>
+            <!-- star -->
+            <div class="star-rating">   <!--assets/theme/css/rating-stars.css-->
+            {% if v.puntaje > 1 or v.puntaje == 1 %}
+              <a style = "color : #f39c12">&#9733;</a>
+            {% else %}
+              <a style = "color: #95a5a6;">&#9733;</a>
+            {% endif %}
+            {% if  v.puntaje > 2 or v.puntaje == 2 %}
+              <a style = "color : #f39c12">&#9733;</a>
+            {% else %}
+              <a style = "color: #95a5a6;">&#9733;</a>
+            {% endif %}
+            {% if  v.puntaje > 3 or v.puntaje == 3 %}
+              <a style = "color : #f39c12">&#9733;</a>
+            {% else %}
+              <a style = "color: #95a5a6;">&#9733;</a>
+            {% endif %}
+            {% if  v.puntaje > 4 or v.puntaje == 4 %}
+              <a style = "color : #f39c12">&#9733;</a>
+            {% else %}
+              <a style = "color: #95a5a6;">&#9733;</a>
+            {% endif %}
+            {% if  v.puntaje > 5 or v.puntaje == 5 %}
+              <a style = "color : #f39c12">&#9733;</a>
+            {% else %}
+              <a style = "color: #95a5a6;">&#9733;</a>
+            {% endif %}
+          </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
 <div class="clear"></div>
 </div>
+</div>
+</div>
+</section>
 </section>
 {% endblock %}
