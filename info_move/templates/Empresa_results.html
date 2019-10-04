@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="engine"><a href="">free amp template</a></section>
+<section class="header6 cid-rDBUIeG48A mbr-fullscreen mbr-parallax-background" id="header6-h">
+    <div class="container">
+    	<h1>Resultados de Búsqueda {{object_list}}</h1>
+    	<!--Table-->
+		<table class="table table-striped w-auto">
+
+		  <!--Table head-->
+		  <thead>
+		    <tr>
+		      <th>ID</th>
+		      <th>Nombre</th>
+		    </tr>
+		  </thead>
+		  <!--Table head-->
+
+		  <!--Table body-->
+		  <tbody>
+		  	{% for empresa in object_list %}
+		    <tr class="table-info">
+		      <th>{{ empresa.identificador }}</th>
+		      <td>{{ empresa.nombre }}</td>
+		    </tr>
+		    {% endfor %}
+		  </tbody>
+		  <!--Table body-->
+
+		</table>
+		<!--Table-->
+		</ul>
+    </div>
+</section>
+{% endblock %}
