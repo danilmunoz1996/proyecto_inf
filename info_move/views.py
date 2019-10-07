@@ -7,6 +7,7 @@ from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 from .admin import UserCreationForm
 from django.contrib.auth import authenticate
+from django.db.models import Q
 
 # Create your views here.
 def signup(request):
@@ -153,3 +154,10 @@ def Comentar(request):
         #returing the form template 
         template = loader.get_template('emitir_comentario.html')
         return HttpResponse(template.render())
+
+
+#Busqueda por patente 
+def SearchPatente(self):
+		query = request.GET.get('q','')
+		Patentes = Micro.objects.filter(Q(patente__icontanins = query))
+		return render(request, '', {'Patentes': Patentes})
