@@ -13,6 +13,7 @@ urlpatterns = [
     path('busqueda_linea', SearchResultsView.as_view(), name = 'buscar_linea'),
     url(r'^usuario/(?P<pk>\d+)/$', VerPerfilUsuario, name='VerPerfilUsuario'),
     url('conductor/(?P<pk>\d+)', VerPerfilConductor, name='VerPerfilConductor'),
+    url('buscador/', Buscador, name='Buscador'),
     path('debugger',debugger,name='debugger'),
     
     url(r'^getdata/', views.Comentar),

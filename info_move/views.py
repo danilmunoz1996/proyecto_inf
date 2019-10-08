@@ -73,7 +73,60 @@ def VerPerfilUsuario(request,pk):
 	return render(request, 'perfil_usuario.html', {'perfil': info_perfil})
 
 def debugger(request):
-	return render(request, 'lol.html', {})
+	return render(request, 'lolen.html', {})
+
+def Buscador(request):
+	if request.method == 'POST':
+		print("Aqui en el metodo jiji")
+		hola = request.POST
+		holiwi = request.POST.get("chofer")
+		if(request.POST.get("linea") is not None):
+			print("Holiwi")
+			#No hago nada porque la ñe del danilo retorna cosas automaticas
+		elif(request.POST.get("chofer") is not None):
+			chofer = Conductor.objects.filter(nombre = request.POST.get("busqueda_chofer"))
+			res = []
+			for i in chofer:
+				micro = (chofer_to_micro_actual(i))
+				micro = Micro.objects.all()[0]
+				m = []
+				m.append(i.nombre)
+				m.append(i.foto)
+				m.append(i.puntaje)
+				m.append(micro.patente)
+				m.append(micro.recorrido.empresa.nombre)
+				m.append(micro.recorrido.letra)
+				aux = 79 - len(m[3]) - len(m[4]) - len(m[5]) - 4
+				if(aux<0):
+					m.append(range(0))
+				else:
+					m.append(range(aux))
+				res.append(m)
+			micros = Micro.objects.all()
+			for i in micros:
+				m = []
+				m.append(chofer[0].nombre)
+				m.append(chofer[0].foto)
+				m.append(chofer[0].puntaje)
+				m.append(i.patente)
+				m.append(i.recorrido.empresa.nombre)
+				m.append(i.recorrido.letra)
+				res.append(m)
+			return render(request, 'lolen.html', {'resultados': res} )
+		elif(request.POST.get("patente") is not None):
+			micros = Micro.objects.filter(patente = request.POST.get("busqueda_patente"))
+			res = []
+			for i in micros:
+				res.append(i)
+			return render(request, 'buscador.html', {'resultados': res} )
+		elif(request.POST.get("otro") is not None):
+			return render(request, 'buscador.html')
+		else:
+			return render(request,'template_de_errors')
+		return render(request,'template_de_exito')
+	else:
+		return render(request, 'lolen.html')
+
 
 def chofer_to_micro_actual(chofer):
 	timezone = pytz.timezone('Chile/Continental')
