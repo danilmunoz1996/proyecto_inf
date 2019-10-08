@@ -1,12 +1,33 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime, timedelta
 import pytz
 from info_move.forms import *
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
+from .admin import UserCreationForm
+from django.contrib.auth import authenticate
+from django.db.models import Q
 
 # Create your views here.
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            correo = form.cleaned_data.get('correo')
+            username = form.cleaned_data.get('nombre_usuario')
+            nombre_usuario = form.cleaned_data.get('nombre_usuario')
+            nombre_completo = form.cleaned_data.get('nombre_completo')
+            rut = form.cleaned_data.get('rut')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            #login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
+
 def home(request):
 	return render(request, 'index.html')
 
@@ -186,3 +207,10 @@ def Comentar(request):
         #returing the form template 
         template = loader.get_template('emitir_comentario.html')
         return HttpResponse(template.render())
+
+
+#Busqueda por patente 
+def SearchPatente(self):
+		query = request.GET.get('q','')
+		Patentes = Micro.objects.filter(Q(patente__icontanins = query))
+		return render(request, '', {'Patentes': Patentes})

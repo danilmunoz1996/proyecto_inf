@@ -4,7 +4,9 @@ from .views import *
 from . import views
 
 urlpatterns = [
+	url(r'^signup/$', views.signup, name='signup'),
     path('', home, name = 'home'),
+    path('home', home, name = 'home'),
     path('ListaMicros', ListaMicros, name = 'ListaMicros'),
     path('ComentariosChofer', ComentariosChofer, name = 'ComentariosChofer'),
     path('Comentar', Comentar, name = 'Comentar'),
