@@ -38,7 +38,7 @@ body{
 	padding:100px 0;
 	position:relative;
 }
-.wrap{
+.wrap_ale{
 	width:80%;
 	margin:0 auto;
 	transition:all .2s linear;
@@ -164,16 +164,17 @@ fieldset#body {
 	-o-border-radius:3em;
 	border:3px solid #50597b;
 }
-/********* Main ************/
-.main{
+/********* main_ale ************/
+.main_ale{
 	padding:30px 0;
 }
-.column_left,.column_middle,.column_right{
+.column_left_ale,.column_middle_ale,.column_right_ale{
 	float:left;
 	width:31.3%;
 }
-.column_middle{
+.column_middle_ale{
 	margin:0 3%;
+	width:55.0%;
 }
 /******** Colunm Left *************/
 .menu_box h3 {
@@ -329,7 +330,7 @@ fieldset#body {
 .chart_list li a:hover{
 	background:#3F4663;
 }
-.chart_list li:nth-child(4){
+.chart_list đ:nth-child(4){
 	border-right:none; 
 }
 .chart_list li a.red{
@@ -523,7 +524,7 @@ fieldset#body {
 	border-radius: 0px 5px 0px 0px;
 }
 /********* Column Middle ***********/
-.column_middle_grid1{
+.column_middle_ale_grid1{
 	background:#394264;
 	border-radius:5px;
 	-webkit-border-radius:5px;
@@ -790,7 +791,7 @@ fieldset#body {
 	background:#cc324b;
 }
 /*********** Colunm Right ***********/
-.column_right_grid{
+.column_right_ale_grid{
 	background:#394264;
 	text-align:center;
 	padding:2em 0;
@@ -799,12 +800,12 @@ fieldset#body {
 	-moz-border-radius: 5px;
 	-o-border-radius: 5px;
 }
-.column_right_grid h3{
+.column_right_ale_grid h3{
 	color: #FFF;
 	font-size: 1.2em;
 	text-transform: uppercase;
 }
-.column_right_grid span{
+.column_right_ale_grid span{
 	background:#50597b;
 	border:1px solid #1F253D;
 	padding:5px 0;
@@ -821,13 +822,13 @@ fieldset#body {
 	-moz-transition: border-color 0.3s;
 	-webkit-transition: border-color 0.3s;
  }
- .column_right_grid span:hover{
+ .column_right_ale_grid span:hover{
  	border:1px solid #11A8AB;
  }
-.column_right_grid span i img{
+.column_right_ale_grid span i img{
 	vertical-align:middle;
 }
-.column_right_grid input[type="text"],.column_right_grid input[type="password"]{
+.column_right_ale_grid input[type="text"],.column_right_ale_grid input[type="password"]{
 	padding:10px;
     color:#FFF;
     font-size:1em;
@@ -1052,7 +1053,7 @@ fieldset#body {
 	  right: 6.5em;
    }
 @media only screen and (max-width: 1366px){
-	.wrap{
+	.wrap_ale{
 		width:90%;
 	}
 	.graph canvas {
@@ -1065,7 +1066,7 @@ fieldset#body {
 	
 }
 @media only screen and (max-width: 1280px) {
-	.wrap{
+	.wrap_ale{
 		width:90%;
 	}
 	.chart_list li{
@@ -1080,7 +1081,7 @@ fieldset#body {
    }
 }
 @media all and (max-width: 1024px) {
-	.wrap {
+	.wrap_ale {
 		width:95%;
 	}
 	.chart_list li {
@@ -1094,17 +1095,17 @@ fieldset#body {
 	}
 }
 @media all and (max-width:800px) {
-	.wrap {
+	.wrap_ale {
 		width:95%;
 	}
 	body{
 		margin:30px 0;
 	}
-	.column_left, .column_middle, .column_right {
+	.column_left_ale, .column_middle_ale, .column_right_ale {
 		float:none;
 		width:100%;
 	}
-	.column_middle{
+	.column_middle_ale{
 		margin:15px 0;
 	}
 	.graph canvas {
@@ -1124,7 +1125,7 @@ fieldset#body {
 	}
 }
 @media all and (max-width:640px) {
-	.wrap{
+	.wrap_ale{
 		width:95%;
 	}
 	.graph canvas {
@@ -1135,7 +1136,7 @@ fieldset#body {
 	}
 }
 @media all and (max-width:480px) {
-	.wrap{
+	.wrap_ale{
 		width:95%;
 	}
 	.graph canvas{
@@ -1146,7 +1147,7 @@ fieldset#body {
 	}
  }
 @media all and (max-width:320px) {
-	.wrap{
+	.wrap_ale{
 		width:95%;
 	}
 	.chart_list li{
@@ -1161,7 +1162,7 @@ fieldset#body {
 	.graph canvas {
 		padding:20px 0em;
 	}
-	.main{
+	.main_ale{
 		padding:15px 0;
 	}
 	.chart,.graph,.video_palyer,.social_network_likes,.weather, .tweets,.social_networks,.sign-in,.downloading_uploading,.date_events,.calender{

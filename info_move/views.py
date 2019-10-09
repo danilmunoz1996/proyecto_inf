@@ -67,13 +67,16 @@ def CrearValoracion(request):
 	else:
 		form = ValoracionForm()
 		return render(request, 'emitir_valoracion.html', {'form': form} )
+
 def patente_to_conductor(patente,fecha,hora):
 	itinerario = Itinerario.objects.filter(micro=patente)
 	for i in itinerario:
-		if(i.inicio <= hora and i.fin > hora):
-			conduce = Conduce.objects.filter(itinerario = i.identificador).filter(fecha = fecha)
-			if(len(conduce) != 0):
-				return conduce[0].conductor
+		if(i.inicio <= hora.hour and i.fin > hora.hour):
+			conduce = Conduce.objects.filter(itinerario = i.identificador)
+			for c in conduce:
+				c = c.filter(fecha = fecha)
+				if(len(c) != 0):
+					return c[0].conductor
 	return None
 #@login_required()
 def VerPerfilUsuario(request,pk):
@@ -109,42 +112,48 @@ def Buscador(request):
 			res = []
 			for i in chofer:
 				micro = (chofer_to_micro_actual(i))
-				micro = Micro.objects.all()[0]
 				m = []
 				m.append(i.nombre)
 				m.append(i.foto)
 				m.append(i.puntaje)
-				m.append(micro.patente)
-				m.append(micro.recorrido.empresa.nombre)
-				m.append(micro.recorrido.letra)
-				aux = 79 - len(m[3]) - len(m[4]) - len(m[5]) - 4
-				if(aux<0):
-					m.append(range(0))
-				else:
-					m.append(range(aux))
+				try:
+					m.append(micro.patente)
+					m.append(micro.recorrido.empresa.nombre)
+					m.append(micro.recorrido.letra)
+				except:
+					m = m[0:3]
+					m.append("Chofer sin micro registrada en este horario")
+					m.append(' ')
+					m.append(' ')
 				res.append(m)
-			micros = Micro.objects.all()
+			return render(request, 'lolen.html', {'resultados': res} )
+		elif(request.POST.get("patente") is not None):
+			micros = SearchPatente(request.POST.get("busqueda_patente"))
+			res = []
 			for i in micros:
+				timezone = pytz.timezone('Chile/Continental')
+				hoy = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y")
+				hora = datetime.strptime(datetime.now(tz=timezone).strftime("%H") , "%H")
+				conductor = patente_to_conductor(i.patente,hoy,hora)
 				m = []
-				m.append(chofer[0].nombre)
-				m.append(chofer[0].foto)
-				m.append(chofer[0].puntaje)
+				try:
+					m.append(conductor.nombre)
+					m.append(conductor.foto)
+					m.append(conductor.puntaje)
+				except:
+					m = []
+					m.append("Sin conductor registrado en este horario")
+					m.append("https://image.flaticon.com/icons/png/512/37/37943.png")
+					m.append(-1)
 				m.append(i.patente)
 				m.append(i.recorrido.empresa.nombre)
 				m.append(i.recorrido.letra)
 				res.append(m)
 			return render(request, 'lolen.html', {'resultados': res} )
-		elif(request.POST.get("patente") is not None):
-			micros = Micro.objects.filter(patente = request.POST.get("busqueda_patente"))
-			res = []
-			for i in micros:
-				res.append(i)
-			return render(request, 'buscador.html', {'resultados': res} )
 		elif(request.POST.get("otro") is not None):
 			return render(request, 'buscador.html')
 		else:
 			return render(request,'template_de_errors')
-		return render(request,'template_de_exito')
 	else:
 		return render(request, 'lolen.html')
 
@@ -208,9 +217,8 @@ def Comentar(request):
         template = loader.get_template('emitir_comentario.html')
         return HttpResponse(template.render())
 
-
 #Busqueda por patente 
-def SearchPatente(self):
-		query = request.GET.get('q','')
-		Patentes = Micro.objects.filter(Q(patente__icontanins = query))
-		return render(request, '', {'Patentes': Patentes})
+def SearchPatente(query):
+		#query = request.GET.get('q','')
+		Patentes = Micro.objects.filter(Q(patente__icontains = query))
+		return Patentes
