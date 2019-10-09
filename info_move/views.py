@@ -97,11 +97,10 @@ def VerPerfilUsuario(request,pk):
 	return render(request, 'perfil_usuario.html', {'perfil': info_perfil})
 
 def debugger(request):
-	return render(request, 'lolen.html', {})
+	return render(request, 'lista.html', {})
 
 def Buscador(request):
 	if request.method == 'POST':
-		print("Aqui en el metodo jiji")
 		hola = request.POST
 		holiwi = request.POST.get("chofer")
 		if(request.POST.get("linea") is not None):
@@ -126,7 +125,7 @@ def Buscador(request):
 					m.append(' ')
 					m.append(' ')
 				res.append(m)
-			return render(request, 'lolen.html', {'resultados': res} )
+			return render(request, 'buscador.html', {'resultados': res} )
 		elif(request.POST.get("patente") is not None):
 			micros = SearchPatente(request.POST.get("busqueda_patente"))
 			res = []
@@ -149,13 +148,13 @@ def Buscador(request):
 				m.append(i.recorrido.empresa.nombre)
 				m.append(i.recorrido.letra)
 				res.append(m)
-			return render(request, 'lolen.html', {'resultados': res} )
+			return render(request, 'buscador.html', {'resultados': res} )
 		elif(request.POST.get("otro") is not None):
 			return render(request, 'buscador.html')
 		else:
 			return render(request,'template_de_errors')
 	else:
-		return render(request, 'lolen.html')
+		return render(request, 'buscador.html')
 
 
 def chofer_to_micro_actual(chofer):
