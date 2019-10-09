@@ -118,13 +118,13 @@ class Valoracion(models.Model):
 class Micro(models.Model):
 	patente = models.CharField(max_length = 10, primary_key = True, unique = True)
 	recorrido = models.ForeignKey(Recorrido, on_delete = models.CASCADE)
-	
-    def __str__(self):
-        return self.patente
 
 	class Meta:
 		verbose_name = 'micro'
 		verbose_name_plural = 'micros'
+
+	def __str__(self):
+		return self.patente
 
 class Itinerario(models.Model):
 	inicio = models.PositiveSmallIntegerField(null = False)

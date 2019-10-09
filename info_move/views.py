@@ -6,7 +6,7 @@ from info_move.forms import *
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 from .admin import UserCreationForm
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.db.models import Q
 
 # Create your views here.
@@ -22,11 +22,11 @@ def signup(request):
             rut = form.cleaned_data.get('rut')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
-            #login(request, user)
+            login(request, user)
             return redirect('home')
     else:
         form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'registro.html', {'form': form})
 
 def home(request):
 	return render(request, 'index.html')
