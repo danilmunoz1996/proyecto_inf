@@ -145,3 +145,4 @@ class Conduce(models.Model):
 	fecha = models.DateField(auto_now = False, auto_now_add = True)
 	conductor = models.ForeignKey(Conductor, on_delete = models.CASCADE)
 	itinerario = models.ForeignKey(Itinerario, on_delete = models.CASCADE)
+

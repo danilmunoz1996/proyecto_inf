@@ -2,14 +2,15 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime, timedelta
 import pytz
-from info_move.forms import *
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView
+
+
 
 # Create your views here.
 def home(request):
 	return render(request, 'index.html')
-
 
 def ListaMicros(request):
 	return render(request, 'Lista.html')
@@ -34,7 +35,7 @@ def CrearValoracion(request):
 			if(conductor == None):
 				mensaje = "Ha ocurrido un error, intenta publicar tu valoración nuevamente"
 				form = ValoracionForm()
-				return render(request,'alguna_template_de_error',{'form':form, 'error': mensaje})
+				return render(request,'template_de_error',{'form':form, 'error': mensaje})
 			valoracion.receptor = conductor
 			valoracion.fecha = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y")
 			valoracion.save()
@@ -42,10 +43,11 @@ def CrearValoracion(request):
 		else:
 			mensaje = "Ha ocurrido un error, intenta publicar tu valoración nuevamente"
 			form = ValoracionForm()
-			return render(request,'alguna_template_de_error',{'form':form, 'error': mensaje})
+			return render(request,'template_de_error',{'form':form, 'error': mensaje})
 	else:
 		form = ValoracionForm()
 		return render(request, 'emitir_valoracion.html', {'form': form} )
+
 def patente_to_conductor(patente,fecha,hora):
 	itinerario = Itinerario.objects.filter(micro=patente)
 	for i in itinerario:
@@ -73,7 +75,7 @@ def VerPerfilUsuario(request,pk):
 	return render(request, 'perfil_usuario.html', {'perfil': info_perfil})
 
 def debugger(request):
-	return render(request, 'perfil_usuario.html', {})
+	return render(request, 'emitir_comentario.html', {})
 
 def chofer_to_micro_actual(chofer):
 	timezone = pytz.timezone('Chile/Continental')
@@ -105,31 +107,33 @@ def VerPerfilConductor(request,pk):
 		return render(request, 'perfil_error.html')
 	return render(request, 'perfil_conductor.html', {'perfil': info_conductor, 'valoraciones': val})
 
-@csrf_exempt
-def Comentar(request):
+
+
+#@csrf_exempt
+#def Comentar(request):
 	#if post request came 
-    if request.method == 'POST':
+   # if request.method == 'POST':
         #getting values from post
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        comment = request.POST.get('comment')
+      #  patente = request.POST.get('patente')
+       # email = request.POST.get('email')
+       # phone = request.POST.get('phone')
+       # comment = request.POST.get('comment')
  
         #adding the values in a context variable 
-        context = {
-            'name': name,
-            'email': email,
-            'phone': phone,
-            'comment': comment
-        }
+       # context = {
+       #     'patente': patente,
+       #     'email': email,
+       #     'phone': phone,
+       #     'comment': comment
+       # }
         
         #getting our showdata template
-        template = loader.get_template('showdata.html')
+        #template = loader.get_template('showdata.html')
         
         #returing the template 
-        return HttpResponse(template.render(context, request))
-    else:
+       # return HttpResponse(template.render(context, request))
+  #  else:
         #if post request is not true 
         #returing the form template 
-        template = loader.get_template('emitir_comentario.html')
-        return HttpResponse(template.render())
+       # template = loader.get_template('emitir_comentario.html')
+        #return HttpResponse(template.render()) 
