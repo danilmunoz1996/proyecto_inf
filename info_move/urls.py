@@ -7,7 +7,7 @@ urlpatterns = [
     path('', home, name = 'home'),
     path('ListaMicros', ListaMicros, name = 'ListaMicros'),
     path('ComentariosChofer', ComentariosChofer, name = 'ComentariosChofer'),
-    #path('Comentar', Comentar, name = 'Comentar'),
+    path('Comentar', Comentar, name = 'Comentar'),
    	path('valorar', CrearValoracion, name = 'CrearValoracion'),
 
 
@@ -16,8 +16,8 @@ urlpatterns = [
     
     path('debugger',debugger,name='debugger'),
     
-    #url(r'^getdata/', views.Comentar),
-    #url(r'^$', views.Comentar),
+    url(r'^getdata/', views.Comentar),
+    url(r'^$', views.Comentar),
 
 
 

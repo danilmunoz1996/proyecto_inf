@@ -109,31 +109,31 @@ def VerPerfilConductor(request,pk):
 
 
 
-#@csrf_exempt
-#def Comentar(request):
-	#if post request came 
-   # if request.method == 'POST':
+@csrf_exempt
+def Comentar(request):
+	if post request came 
+    if request.method == 'POST':
         #getting values from post
-      #  patente = request.POST.get('patente')
-       # email = request.POST.get('email')
-       # phone = request.POST.get('phone')
-       # comment = request.POST.get('comment')
+        patente = request.POST.get('patente')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        comment = request.POST.get('comment')
  
         #adding the values in a context variable 
-       # context = {
-       #     'patente': patente,
-       #     'email': email,
-       #     'phone': phone,
-       #     'comment': comment
-       # }
+        context = {
+            'patente': patente,
+            'email': email,
+            'phone': phone,
+            'comment': comment
+        }
         
         #getting our showdata template
-        #template = loader.get_template('showdata.html')
+        template = loader.get_template('showdata.html')
         
         #returing the template 
-       # return HttpResponse(template.render(context, request))
-  #  else:
-        #if post request is not true 
+        return HttpResponse(template.render(context, request))
+    else:
+        if post request is not true 
         #returing the form template 
-       # template = loader.get_template('emitir_comentario.html')
-        #return HttpResponse(template.render()) 
+        template = loader.get_template('emitir_comentario.html')
+        return HttpResponse(template.render()) 

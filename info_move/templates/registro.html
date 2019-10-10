@@ -1,0 +1,71 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'perfil/css/style.css' %}">
+<section class="engine"><a href="">free amp template</a></section><section class="header6 cid-rDBUIeG48A mbr-fullscreen mbr-parallax-background" id="header6-h">
+
+	 <!-- background esta en carpeta mobirise/css --    .cid-rDBUIeG48A {
+  background-image: url("../../../assets/images/background4.jpg"); -->
+
+     <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(35, 35, 35);">
+    </div>	
+    <div class="container">
+	  <div class="main_ale">  
+	    <div class="wrap_ale">  		 
+				 <div class="column_right_ale_grid sign-in">
+				 	<div class="sign_in">
+				       <h3>Registrate en la plataforma</h3>
+					    	<form method="post">
+					    		{% csrf_token %}
+    							{% for field in form %}
+        						<span>
+        							{% if field.name == 'password1' or field.name == 'password2' %}
+        							<i><img src="{% static 'perfil/images/lock.png' %}" alt="" /></i>
+					 	     		<input type="password" name = "{{field.name}}" placeholder="{{field.label}}">
+					 	     		{% else %}
+					 	     		<i><img src="{% static 'perfil/images/user.png'%}" alt="" /></i>
+					 	     		<input type="text" placeholder="{{field.label}}" name = "{{field.name}}">
+					 	     		{% endif %}
+					 	    	</span>
+    							{% endfor %}
+    							<p><input type="submit" value="Continuar" /></p>
+							</form>
+					       <h4><a href="#">¿Ya tienes cuenta? Inicia sesión</a></h4>				   
+          		       </div>
+				   </div>
+    	<div class="clear"></div>
+ 	 </div>
+   </div>
+  		 <div class="copy-right">
+				<p>© 2013 Designed by <a href="wenaloscabros" target="_blank">Info-Move</a>  • Template by <a href="http://www.wenaloscabros.com" target="_blank">Afernandezm</a> </p>
+	 	 </div>   
+</section>
+{% endblock %}
+<!--
+<form>
+					 	    <span>
+					 	     <i><img src="{% static 'perfil/images/user.png'%}" alt="" /></i>
+					 	     <input type="text" placeholder="Nombre de Usuario">
+					 	    </span>
+					 	    <span>
+					 	     <i><img src="{% static 'perfil/images/user.png'%}" alt="" /></i>
+					 	     <input type="text" placeholder="Nombre Completo">
+					 	    </span>
+					 	    <span>
+					 	     <i><img src="{% static 'perfil/images/id-card.png'%}" alt="" /></i>
+					 	     <input type="text" placeholder="Rut">
+					 	    </span>
+					 	    <span>
+					 	    <i><img src="{% static 'perfil/images/mail.png' %}" alt="" /></i><input type="text" placeholder ="Email">
+					 	    </span>
+					 	    <span>
+					 	     <i><img src="{% static 'perfil/images/lock.png' %}" alt="" /></i>
+					 	     <input type="password" placeholder="Contraseña">
+					 	    </span>
+					 	    <span>
+					 	    <i><img src="{% static 'perfil/images/lock.png' %}" alt="" /></i>
+					 	     <input type="password" placeholder="Repite tu contraseña">
+					 	    </span>
+					 		<input type="submit" class="my-button" value="Registrarme">
+					 	</form>
+-->

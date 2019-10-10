@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 <!--Testimonios de cometarios-->
 <section class="engine"><a href="">site maker</a></section><section class="testimonials4 cid-rDBPEO4kX3" id="testimonials4-f">
 
@@ -12,7 +13,7 @@
         <div class="user row">
           <div class="col-lg-3 col-md-4">
             <div class="user_image">
-              <img src="assets/images/face2.jpg">
+              <img src="{% static 'images/face2.jpg' %}">
             </div>
           </div>
           <div class="testimonials-caption col-lg-9 col-md-8">
@@ -42,7 +43,7 @@
         <div class="user row">
           <div class="col-lg-3 col-md-4">
             <div class="user_image">
-              <img src="assets/images/face1.jpg">
+              <img src="{% static 'images/face1.jpg' %}">
             </div>
           </div>
           <div class="testimonials-caption col-lg-9 col-md-8">

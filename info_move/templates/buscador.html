@@ -1,0 +1,148 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<style>
+.estrellitas{
+	float:right;
+}
+.estrellitas img{
+	display:block;
+	border-radius:4em;
+	-webkit-border-radius:4em;
+	-moz-border-radius:4em;
+	-o-border-radius:4em;
+	border:2px;
+}
+</style>
+<link rel="stylesheet" href="{% static 'perfil/css/style.css' %}"><section class="header6 cid-rDBUIeG48A mbr-fullscreen mbr-parallax-background" id="header6-h">
+	 <!-- background esta en carpeta mobirise/css --    .cid-rDBUIeG48A {
+  background-image: url("../../../assets/images/background4.jpg"); -->
+<div class="mbr-overlay" style="background-color: rgba(35, 35, 35,0.7);">
+</div>
+	  <div class="fondo_ale" style="width:100%; opacity: 0.9;">  
+	    <div class="wrap_ale">  		 
+	       <div class="column_left_ale" style="padding-right:1em">	          
+	    		<div class="graph">
+		             	<div class="graph_list">
+		             		 <div class="week-month-year">
+						<h2>Buscador de micros</h2>
+						<p><a class = "tablink" href="#" onclick="openLink(event, 'Linea');">Por Linea</a></p>
+						<p><a href="#" class = "active tablink" onclick="openLink(event, 'Chofer');">Por Chofer</a></p>
+						<p><a href="#" class = "tablink" onclick="openLink(event, 'Patente');">Por patente</a></p>
+						<p><a href="#" class = "tablink" onclick="openLink(event, 'Otro');">Por otra ñe</a></p>
+						<div class="clear"></div>
+	    			 </div>
+				      	<div class="articles_list">
+						<div id="Linea" class = "tweets_list myLink"  >
+							<form class="search-form" action = "{% url 'buscar_linea' %}" method = 'get' >
+								<span>
+									<input type="text" name = "q" placeholder="Ej: Las Galaxias">
+								</span>
+								<input type="submit" class="my-button" value="Buscar" name="linea">
+								<p></p>
+								<br>
+							</form>
+						</div>
+						<div id="Chofer" class = "tweets_list myLink"  >
+							<form method="post">
+								{% csrf_token %}
+								<span>
+									<input type="text" placeholder="Introduzca Conductor" name="busqueda_chofer" >
+								</span>
+								<button type="submit" value="Buscar" name="chofer"></button>
+								<p></p>
+								<br>
+							</form>
+						</div>
+						<div id="Patente" class = "tweets_list myLink"  >
+							<form method="post">
+								{% csrf_token %}
+								<span>
+									<i><img src="images/mail.png" alt="" /></i>
+									<input type="text" placeholder="Introduzca Patente" name="busqueda_patente">
+								</span>
+								<button type="submit" value="Buscar" name="patente"></button>
+								<p></p>
+								<br>
+							</form>
+						</div>		
+					</div>
+				      </div>
+		             </div>
+	  		</div> 
+	  		          
+		         <div class="tweets">
+		            <div class="row" style="background-color:rgb(134, 45, 134,0.5);padding-top: 1em">
+            		<!--Titles-->
+            		<br>
+            		<div class="title pb-5 col-12">
+            			<br>
+            			<br>
+		            	<br>
+		            	{% if resultados %}
+            		    <h2 class="align-left mbr-fonts-style display-1">Resultados</h2>
+            		    <br>	              
+							<ul>
+								{% for resultado in resultados %}
+						  		<li>
+						  			<div class="estrellitas">	
+				             		{% if resultado.2 == -1 %}
+				             		<a><img src="{% static 'perfil/images/information.png' %}" height="66" width="66" alt="" /></a>
+				             		{% elif resultado.2 <= 1 %}
+				             		<a><img src="{% static 'perfil/images/star-1.png' %}" height="66" width="66" alt="" /></a>
+				             		{% elif resultado.2 == 2 %}
+				             		<a><img src="{% static 'perfil/images/star-2.png' %}" height="66" width="66" alt="" /></a>
+				             		{% elif resultado.2 == 3 %}
+				             		<a><img src="{% static 'perfil/images/star-3.png' %}" height="66" width="66" alt="" /></a>
+				             		{% elif resultado.2 == 4 %}
+				             		<a><img src="{% static 'perfil/images/star-4.png' %}" height="66" width="66" alt="" /></a>
+				             		{% elif resultado.2 == 5 %}
+				             		<a><img src="{% static 'perfil/images/star-5.png' %}" height="66" width="66" alt="" /></a>
+				             		{% endif %}
+				             	</div>
+						  		<div class="profile_img" style="float:left; padding:1em;">	
+				             		<a href="#"><img src={{resultado.1}} height="60" width="60" alt="" /></a>
+				             	</div>
+				             		 <a href="#" style="font-size: 1.5em">{{resultado.0}} &nbsp &nbsp &nbsp</a> <br>
+				             		 {{resultado.4}} 24{{resultado.5}} {{resultado.3}}
+				             		 <br>
+						  			<span>Sin informacion Sin informacion  Sin informacion  Sin informacion  </span>
+						  		</li>
+						  		{% endfor %}
+						  		{% else %}
+						  		<h2 class="align-left mbr-fonts-style display-1">Bienvenido al Buscador</h2>
+            		    		<br>	              
+								<ul>
+						  		<li>
+				             	 Busca micros por <a href="#">patente</a> (puede estar incompleta), por <a href="#">linea</a> o por <a href="#">conductor</a>.
+						  			</li>
+						  		{% endif %}
+				    		</ul>								     
+	    				</div>
+    	    		</div>
+    	<div class="clear"></div>
+ 	 </div>
+   </div>
+<script>
+var i = 0;
+function openLink(evt, linkName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("myLink");
+  tablinks = document.getElementsByClassName("tablink");
+ for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace("active", "");
+      x[i].style.display = "none";
+  }
+  document.getElementById(linkName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+  document.getElementsByClassName("tablink")[1].click();
+</script>
+</section>
+{% endblock %}
