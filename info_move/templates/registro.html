@@ -20,11 +20,11 @@
     							{% for field in form %}
         						<span>
         							{% if field.name == 'password1' or field.name == 'password2' %}
-        							<i><img src="{% static 'perfil/images/user.png'%}" alt="" /></i>
-					 	     		<input type="password" placeholder="{{field.name}}">
+        							<i><img src="{% static 'perfil/images/lock.png' %}" alt="" /></i>
+					 	     		<input type="password" name = "{{field.name}}" placeholder="{{field.label}}">
 					 	     		{% else %}
 					 	     		<i><img src="{% static 'perfil/images/user.png'%}" alt="" /></i>
-					 	     		<input type="text" placeholder="{{field.name}}">
+					 	     		<input type="text" placeholder="{{field.label}}" name = "{{field.name}}">
 					 	     		{% endif %}
 					 	    	</span>
     							{% endfor %}
