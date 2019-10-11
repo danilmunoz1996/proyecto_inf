@@ -64,6 +64,8 @@ body{
 #loginContainer {
     position:relative;
     float:left;
+    padding-right:10px;
+    padding-top:15px;
 }
 /* Login Button */
 #loginButton { 
@@ -78,7 +80,7 @@ body{
     font-size:1em; 
     background:url(../images/loginArrow.png) no-repeat 26px 8px;
     display:block;
-    padding: 0 0 0 0;
+    padding: 0 30px 0 0;
     font-family: 'ambleregular';
 }
 #loginButton.active span {
@@ -87,8 +89,8 @@ body{
 /* Login Box */
 #loginBox {
     position:absolute;
-    top:43px;
-    right:-10px;
+    top:53px;
+    right:10px;
     display:none;
     z-index:29;
 }
@@ -106,7 +108,7 @@ body{
 	content: '';
 	position: absolute;
 	right: 40px;
-	top: -6px;
+	top: 6px;
 	border-left: 6px solid rgba(0, 0, 0, 0);
 	border-right: 6px solid rgba(0, 0, 0, 0);
 	border-bottom: 6px solid #1F253D;

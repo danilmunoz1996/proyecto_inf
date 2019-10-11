@@ -4,7 +4,7 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
-{% extends 'base.html'%}
+{% extends base_template_name %}
 {% load static %}
 {% block content %}
 <style>
@@ -40,7 +40,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	    			 </div>
 				      	<div class="articles_list">
 						<div id="Linea" class = "tweets_list myLink"  >
-							<form class="search-form" action = "{% url 'buscar_linea' %}" method = 'get' >
+							
+								<form class="search-form" method = 'get' >
 								<span>
 									<input type="text" name = "q" placeholder="Ej: Las Galaxias">
 								</span>

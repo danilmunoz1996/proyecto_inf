@@ -3,12 +3,36 @@ from django.http import HttpResponse
 from datetime import datetime, timedelta
 import pytz
 from django.template import loader
+from info_move.models import *
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
-
+from django.shortcuts import render, redirect
+from .admin import UserCreationForm
+from .forms import *
+from django.contrib.auth import authenticate, login
+from django.db.models import Q
 
 
 # Create your views here.
+def signup(request):
+	if request.method == 'POST':
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			form.save()
+			correo = form.cleaned_data.get('correo')
+			username = form.cleaned_data.get('nombre_usuario')
+			nombre_usuario = form.cleaned_data.get('nombre_usuario')
+			nombre_completo = form.cleaned_data.get('nombre_completo')
+			rut = form.cleaned_data.get('rut')
+			raw_password = form.cleaned_data.get('password1')
+			user = authenticate(username=username, password=raw_password)
+			login(request, user)
+			return redirect('home')
+		return render(request, 'sign_up_error.html', {'form': form})
+	else:
+		form = UserCreationForm()
+	return render(request, 'registro.html', {'form': form})
+
 def home(request):
 	return render(request, 'index.html')
 
@@ -47,6 +71,24 @@ def CrearValoracion(request):
 	else:
 		form = ValoracionForm()
 		return render(request, 'emitir_valoracion.html', {'form': form} )
+	"""
+		patente = request.POST.get("patente")
+		telefono = request.POST.get("telefono")
+		comentario = request.POST.get("comentario")
+		valoracion.emisor = request.user
+		timezone = pytz.timezone('Chile/Continental')
+		actual = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y %H:%M:%S") , "%d/%m/%Y %H:%M:%S")
+		conductor = patente_to_conductor(patente,datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y"),actual.hour)
+		if(conductor == None):
+			mensaje = "Ha ocurrido un error, intenta publicar tu valoración nuevamente"
+			return render(request,'template_de_error',{'form':form, 'error': mensaje})
+		valoracion.receptor = conductor
+		valoracion.fecha = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y")
+		valoracion.save()
+		return render(request,'template_de_exito')
+	else:
+		return render(request, 'emitir_valoracion.html' )"""
+
 
 def patente_to_conductor(patente,fecha,hora):
 	itinerario = Itinerario.objects.filter(micro=patente)
@@ -59,12 +101,21 @@ def patente_to_conductor(patente,fecha,hora):
 #@login_required()
 def VerPerfilUsuario(request,pk):
 	info_perfil = []
+	print("Ayuda")
 	try:
 		us = Usuario.objects.get(rut = pk)
+		print(us)
 		info_perfil.append(us.nombre_usuario)
+		print("AAAA")
 		info_perfil.append(us.nombre_completo)
+		print("BBBB")
 		val = Valoracion.objects.filter(emisor=pk)
-		info_perfil.append(len(val))
+		print("CCCC")
+		if not val:
+			info_perfil.append(0)
+		else:
+			info_perfil.append(len(val))
+		print("DDD")
 		#si val.size() no funciona
 		#valoraciones = 0	
 		#for v in val:		
@@ -75,7 +126,7 @@ def VerPerfilUsuario(request,pk):
 	return render(request, 'perfil_usuario.html', {'perfil': info_perfil})
 
 def debugger(request):
-	return render(request, 'base_loggeado.html', {})
+	return render(request, 'UserProfile.html', {})
 
 def Buscador(request):
 	if request.method == 'POST':
@@ -164,6 +215,11 @@ def VerPerfilConductor(request,pk):
 		return render(request, 'perfil_error.html')
 	return render(request, 'perfil_conductor.html', {'perfil': info_conductor, 'valoraciones': val})
 
+#Busqueda por patente 
+def SearchPatente(query):
+	#query = request.GET.get('q','')
+	Patentes = Micro.objects.filter(Q(patente__icontains = query))
+	return Patentes
 
 
 #@csrf_exempt
