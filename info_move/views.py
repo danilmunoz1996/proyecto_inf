@@ -168,11 +168,13 @@ def Buscador(request):
 				hora = datetime.strptime(datetime.now(tz=timezone).strftime("%H") , "%H")
 				conductor = patente_to_conductor(i.patente,hoy,hora)
 				m = []
+				cond = False
 				try:
 					m.append(conductor.nombre)
 					m.append(conductor.foto)
 					m.append(conductor.puntaje)
 				except:
+					cond = True
 					m = []
 					m.append("Sin conductor registrado en este horario")
 					m.append("https://image.flaticon.com/icons/png/512/37/37943.png")
@@ -180,7 +182,10 @@ def Buscador(request):
 				m.append(i.patente)
 				m.append(i.recorrido.empresa.nombre)
 				m.append(i.recorrido.letra)
-				m.append(conductor.identificador)
+				if cond:
+					m.append(-1)
+				else:
+					m.append(conductor.identificador)
 				res.append(m)
 			return render(request, 'buscador.html', {'resultados': res} )
 		elif(request.POST.get("otro") is not None):

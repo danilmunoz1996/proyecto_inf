@@ -106,8 +106,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				             		<a><img src="{% static 'perfil/images/star-5.png' %}" height="66" width="66" alt="" /></a>
 				             		{% endif %}
 				             	</div>
-						  		<div class="profile_img" style="float:left; padding:1em;">	
+						  		<div class="profile_img" style="float:left; padding:1em;">
+						  		{% if resultado.6 == -1 %}
+						  			<a href="#"><img src={{resultado.1}} height="60" width="60" alt="" /></a>
+						  		{% else %}
 				             		<a href="{% url 'VerPerfilConductor' resultado.6 %}"><img src={{resultado.1}} height="60" width="60" alt="" /></a>
+						  		{% endif %}
 				             	</div>
 				             		 <a href="#" style="font-size: 1.5em">{{resultado.0}} &nbsp &nbsp &nbsp</a> <br>
 				             		 {{resultado.4}} 24{{resultado.5}} {{resultado.3}}
