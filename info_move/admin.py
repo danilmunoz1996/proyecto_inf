@@ -32,6 +32,9 @@ class UserCreationForm(forms.ModelForm):
             user.save()
         return user
 # Register your models here.
+
+
+
 class user(admin.ModelAdmin):
 	class Meta:
 		model = Usuario

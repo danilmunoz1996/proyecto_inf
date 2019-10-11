@@ -1,7 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import (BaseUserManager, AbstractUser)
-from django.db.models import Q
-from django.views.generic import TemplateView, ListView
+from django.contrib.auth.models import BaseUserManager, AbstractUser
 # Create your models here.
 
 class ManejadorUsuario(BaseUserManager):
@@ -123,9 +121,6 @@ class Micro(models.Model):
 		verbose_name = 'micro'
 		verbose_name_plural = 'micros'
 
-	def __str__(self):
-		return self.patente
-
 class Itinerario(models.Model):
 	inicio = models.PositiveSmallIntegerField(null = False)
 	fin = models.PositiveSmallIntegerField(null = False)
@@ -151,11 +146,3 @@ class Conduce(models.Model):
 	conductor = models.ForeignKey(Conductor, on_delete = models.CASCADE)
 	itinerario = models.ForeignKey(Itinerario, on_delete = models.CASCADE)
 
-class SearchResultsView(ListView):
-	model = Empresa
-	template_name = 'Empresa_results.html'
-
-	def getqueryset(self):
-		query = self.request.GET.get('q')
-		object_list = Empresa.objects.filter(Q(nombre__icontanins = query))
-		return object_list

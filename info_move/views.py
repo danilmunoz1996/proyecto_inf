@@ -1,37 +1,16 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime, timedelta
 import pytz
-from info_move.forms import *
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
-from .admin import UserCreationForm
-from django.contrib.auth import authenticate, login
-from django.db.models import Q
+from django.views.generic import TemplateView
+
+
 
 # Create your views here.
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            correo = form.cleaned_data.get('correo')
-            username = form.cleaned_data.get('nombre_usuario')
-            nombre_usuario = form.cleaned_data.get('nombre_usuario')
-            nombre_completo = form.cleaned_data.get('nombre_completo')
-            rut = form.cleaned_data.get('rut')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
-        return render(request, 'sign_up_error.html', {'form': form})
-    else:
-        form = UserCreationForm()
-    return render(request, 'registro.html', {'form': form})
-
 def home(request):
 	return render(request, 'index.html')
-
 
 def ListaMicros(request):
 	return render(request, 'Lista.html')
@@ -56,7 +35,7 @@ def CrearValoracion(request):
 			if(conductor == None):
 				mensaje = "Ha ocurrido un error, intenta publicar tu valoración nuevamente"
 				form = ValoracionForm()
-				return render(request,'alguna_template_de_error',{'form':form, 'error': mensaje})
+				return render(request,'template_de_error',{'form':form, 'error': mensaje})
 			valoracion.receptor = conductor
 			valoracion.fecha = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y")
 			valoracion.save()
@@ -64,7 +43,7 @@ def CrearValoracion(request):
 		else:
 			mensaje = "Ha ocurrido un error, intenta publicar tu valoración nuevamente"
 			form = ValoracionForm()
-			return render(request,'alguna_template_de_error',{'form':form, 'error': mensaje})
+			return render(request,'template_de_error',{'form':form, 'error': mensaje})
 	else:
 		form = ValoracionForm()
 		return render(request, 'emitir_valoracion.html', {'form': form} )
@@ -72,12 +51,10 @@ def CrearValoracion(request):
 def patente_to_conductor(patente,fecha,hora):
 	itinerario = Itinerario.objects.filter(micro=patente)
 	for i in itinerario:
-		if(i.inicio <= hora.hour and i.fin > hora.hour):
-			conduce = Conduce.objects.filter(itinerario = i.identificador)
-			for c in conduce:
-				c = c.filter(fecha = fecha)
-				if(len(c) != 0):
-					return c[0].conductor
+		if(i.inicio <= hora and i.fin > hora):
+			conduce = Conduce.objects.filter(itinerario = i.identificador).filter(fecha = fecha)
+			if(len(conduce) != 0):
+				return conduce[0].conductor
 	return None
 #@login_required()
 def VerPerfilUsuario(request,pk):
@@ -157,7 +134,6 @@ def Buscador(request):
 	else:
 		return render(request, 'buscador.html')
 
-
 def chofer_to_micro_actual(chofer):
 	timezone = pytz.timezone('Chile/Continental')
 	hoy = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y")
@@ -188,37 +164,33 @@ def VerPerfilConductor(request,pk):
 		return render(request, 'perfil_error.html')
 	return render(request, 'perfil_conductor.html', {'perfil': info_conductor, 'valoraciones': val})
 
-@csrf_exempt
-def Comentar(request):
-	#if post request came 
-    if request.method == 'POST':
-        #getting values from post
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        comment = request.POST.get('comment')
+
+
+#@csrf_exempt
+#def Comentar(request):
+#	if post request came 
+#    if request.method == 'POST':
+#        #getting values from post
+#        patente = request.POST.get('patente')
+#        email = request.POST.get('email')
+#        phone = request.POST.get('phone')
+#        comment = request.POST.get('comment')
  
         #adding the values in a context variable 
-        context = {
-            'name': name,
-            'email': email,
-            'phone': phone,
-            'comment': comment
-        }
-        
-        #getting our showdata template
-        template = loader.get_template('showdata.html')
+#        context = {
+#            'patente': patente,
+#            'email': email,
+#            'phone': phone,
+#            'comment': comment
+#        }
+#        
+#        #getting our showdata template
+#        template = loader.get_template('showdata.html')
         
         #returing the template 
-        return HttpResponse(template.render(context, request))
-    else:
-        #if post request is not true 
-        #returing the form template 
-        template = loader.get_template('emitir_comentario.html')
-        return HttpResponse(template.render())
-
-#Busqueda por patente 
-def SearchPatente(query):
-		#query = request.GET.get('q','')
-		Patentes = Micro.objects.filter(Q(patente__icontains = query))
-		return Patentes
+#        return HttpResponse(template.render(context, request))
+#    else:
+#        if post request is not true 
+#        #returing the form template 
+#        template = loader.get_template('emitir_comentario.html')
+#        return HttpResponse(template.render()) 
