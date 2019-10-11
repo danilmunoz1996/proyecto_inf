@@ -7,11 +7,14 @@
 
       <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(35, 35, 35);">
     </div>
-    
     <!--Overlay-->
-    
     <!--Container-->
     <div class="container">
+    	{% if error %}
+    	<span class="mbri-sad-face"></span>
+    	<strong>{{error}}</strong>
+    	<span class="mbri-sad-face"></span>
+    	{% endif %}
     	<form method="post">
     	 {% csrf_token %}
             {{form.as_p}}

@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractUser
+from django.db.models import Q
+from django.views.generic import TemplateView, ListView
 # Create your models here.
 
 class ManejadorUsuario(BaseUserManager):
@@ -145,4 +147,13 @@ class Conduce(models.Model):
 	fecha = models.DateField(auto_now = False, auto_now_add = True)
 	conductor = models.ForeignKey(Conductor, on_delete = models.CASCADE)
 	itinerario = models.ForeignKey(Itinerario, on_delete = models.CASCADE)
+
+class SearchResultsView(ListView):
+	model = Empresa
+	template_name = 'Empresa_results.html'
+
+	def getqueryset(self):
+		query = self.request.GET.get('q')
+		object_list = Empresa.objects.filter(Q(nombre__icontanins = query))
+		return object_list
 

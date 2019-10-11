@@ -9,11 +9,13 @@ from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from .admin import UserCreationForm
 from .forms import *
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 
+def logout(request):
+    logout(request)
+    return render_to_response('login.html', {'request': request})
 
-# Create your views here.
 def signup(request):
 	if request.method == 'POST':
 		form = UserCreationForm(request.POST)
@@ -54,20 +56,21 @@ def CrearValoracion(request):
 			patente= form.cleaned_data['patente']
 			valoracion.emisor = request.user
 			timezone = pytz.timezone('Chile/Continental')
-			actual = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y %H:%M:%S") , "%d/%m/%Y %H:%M:%S")
-			conductor = patente_to_conductor(patente,datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y"),actual.hour)
+			hoy = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y")
+			hora = datetime.strptime(datetime.now(tz=timezone).strftime("%H") , "%H")
+			conductor = patente_to_conductor(patente,hoy,hora)
 			if(conductor == None):
 				mensaje = "Ha ocurrido un error, intenta publicar tu valoración nuevamente"
 				form = ValoracionForm()
-				return render(request,'template_de_error',{'form':form, 'error': mensaje})
+				return render(request,'emitir_valoracion.html',{'form':form, 'error': mensaje})
 			valoracion.receptor = conductor
 			valoracion.fecha = datetime.strptime(datetime.now(tz=timezone).strftime("%d/%m/%Y") , "%d/%m/%Y")
 			valoracion.save()
-			return render(request,'template_de_exito')
+			return render(request,'valorar_exito.html')
 		else:
 			mensaje = "Ha ocurrido un error, intenta publicar tu valoración nuevamente"
 			form = ValoracionForm()
-			return render(request,'template_de_error',{'form':form, 'error': mensaje})
+			return render(request,'emitir_valoracion.html',{'form':form, 'error': mensaje})
 	else:
 		form = ValoracionForm()
 		return render(request, 'emitir_valoracion.html', {'form': form} )
@@ -93,7 +96,7 @@ def CrearValoracion(request):
 def patente_to_conductor(patente,fecha,hora):
 	itinerario = Itinerario.objects.filter(micro=patente)
 	for i in itinerario:
-		if(i.inicio <= hora and i.fin > hora):
+		if(i.inicio <= hora.hour and i.fin > hora.hour):
 			conduce = Conduce.objects.filter(itinerario = i.identificador).filter(fecha = fecha)
 			if(len(conduce) != 0):
 				return conduce[0].conductor
@@ -153,6 +156,7 @@ def Buscador(request):
 					m.append("Chofer sin micro registrada en este horario")
 					m.append(' ')
 					m.append(' ')
+					m.append(i.identificador)
 				res.append(m)
 			return render(request, 'buscador.html', {'resultados': res} )
 		elif(request.POST.get("patente") is not None):
@@ -176,6 +180,7 @@ def Buscador(request):
 				m.append(i.patente)
 				m.append(i.recorrido.empresa.nombre)
 				m.append(i.recorrido.letra)
+				m.append(conductor.identificador)
 				res.append(m)
 			return render(request, 'buscador.html', {'resultados': res} )
 		elif(request.POST.get("otro") is not None):
@@ -205,7 +210,10 @@ def VerPerfilConductor(request,pk):
 		info_conductor.append(conductor.foto)
 		info_conductor.append(conductor.puntaje)
 		val = Valoracion.objects.filter(receptor=pk)
-		info_conductor.append(len(val))
+		if not val:
+			info_conductor.append(0)
+		else:
+			info_conductor.append(len(val))
 		micro = chofer_to_micro_actual(conductor)
 		if micro == None:
 			info_conductor.append('---')

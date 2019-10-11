@@ -62,7 +62,7 @@
                               <h4 style="font-size: 0.8em">Bienvenid@,<a style="font-size: 0.8em" href="#"> {{user.nombre_completo.split.0}}</a></h4>
                               <ul>
                               <li class="profile active"><a style="font-size: 0.8em" href="{% url 'VerPerfilUsuario' user.rut %}">Perfil </a></li>
-                              <li class="logout"><a style="font-size: 0.8em" href="{% url 'logout'%}"> Logout</a></li>
+                              <li class="logout"><a style="font-size: 0.8em" href="{% url 'logout'%}?next={% url 'home' %}"> Logout</a></li>
                               <div class="clear"></div>   
                             </ul>
                           </div>                                  

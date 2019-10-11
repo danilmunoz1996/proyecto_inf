@@ -35,13 +35,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<p><a class = "tablink" href="#" onclick="openLink(event, 'Linea');">Por Linea</a></p>
 						<p><a href="#" class = "active tablink" onclick="openLink(event, 'Chofer');">Por Chofer</a></p>
 						<p><a href="#" class = "tablink" onclick="openLink(event, 'Patente');">Por patente</a></p>
-						<p><a href="#" class = "tablink" onclick="openLink(event, 'Otro');">Por otra ñe</a></p>
+						<!--<p><a href="#" class = "tablink" onclick="openLink(event, 'Otro');">Por otra ñe</a></p>-->
 						<div class="clear"></div>
 	    			 </div>
 				      	<div class="articles_list">
 						<div id="Linea" class = "tweets_list myLink"  >
-							
-								<form class="search-form" method = 'get' >
+								<form class="search-form" action = "{% url 'buscar_linea' %}" method = 'get' >
 								<span>
 									<input type="text" name = "q" placeholder="Ej: Las Galaxias">
 								</span>
@@ -56,7 +55,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<span>
 									<input type="text" placeholder="Introduzca Conductor" name="busqueda_chofer" >
 								</span>
-								<button type="submit" value="Buscar" name="chofer"></button>
+								<input type="submit" class="my-button" value="Buscar" name="chofer"></button>
 								<p></p>
 								<br>
 							</form>
@@ -68,7 +67,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									<i><img src="images/mail.png" alt="" /></i>
 									<input type="text" placeholder="Introduzca Patente" name="busqueda_patente">
 								</span>
-								<button type="submit" value="Buscar" name="patente"></button>
+								<input type="submit" class="my-button" value="Buscar" name="patente"></button>
 								<p></p>
 								<br>
 							</form>
@@ -108,7 +107,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				             		{% endif %}
 				             	</div>
 						  		<div class="profile_img" style="float:left; padding:1em;">	
-				             		<a href="#"><img src={{resultado.1}} height="60" width="60" alt="" /></a>
+				             		<a href="{% url 'VerPerfilConductor' resultado.6 %}"><img src={{resultado.1}} height="60" width="60" alt="" /></a>
 				             	</div>
 				             		 <a href="#" style="font-size: 1.5em">{{resultado.0}} &nbsp &nbsp &nbsp</a> <br>
 				             		 {{resultado.4}} 24{{resultado.5}} {{resultado.3}}

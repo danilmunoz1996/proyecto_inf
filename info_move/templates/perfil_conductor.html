@@ -13,7 +13,7 @@
   <div class="main">  
     <div class="container" style="background-color:rgba(80, 89, 123 ,0.4)">    
       <div class="profile_picture">
-        <a><img src={{perfil.1}}/> </a>             
+        <a><img src={{perfil.1}} height="120" width="120" > </a>             
           <div class="profile_picture_name">
             <h2>{{perfil.0}}</h2>
           </div>
@@ -22,7 +22,7 @@
         <ul>
           <li><a href="#" class="red"><img src="{% static '/perfil/images/favourite.png'%}" alt="" /> {{perfil.2}}</a></li>
           <li><a href="#" class="purple"> <img src="{% static '/perfil/images/comments.png'%}" alt="" /> {{perfil.3}}</a></li>
-          <li><a href="#" class="yellow"> <img src="{% static '//perfil/images/events.png'%}" alt="" />{{perfil.4}}</a></li>
+          <li><a href="#" class="yellow"> <img src="{% static '/perfil/images/events.png'%}" alt="" />{{perfil.4}}</a></li>
           <div class="clear"></div> 
         </ul>
       </div>
@@ -38,15 +38,15 @@
             <div class="user_image">
               <img src="{% static '/images/face2.jpg' %}">
             </div>
-            <p>&nbsp &nbsp &nbsp {{v.fecha}}</p>
           </div>
           <div class="testimonials-caption col-lg-9 col-md-8">
+            <div class="user_name mbr-bold mbr-fonts-style align-left pt-3 display-7"> <p> Fecha: {{v.fecha}} </p> </div>
             <div class="user_text ">
               <p class="mbr-fonts-style  display-7">
                  <em>{{v.comentario}}</em>
               </p>
             </div>
-            <div class="user_name mbr-bold mbr-fonts-style align-left pt-3 display-7">{{v.receptor.nombre}}</div>
+            <div class="user_name mbr-bold mbr-fonts-style align-left pt-3 display-7">{{v.emisor.nombre_usuario}}</div>
             <!-- star -->
             <div class="star-rating">   <!--assets/theme/css/rating-stars.css-->
             {% if v.puntaje > 1 or v.puntaje == 1 %}
