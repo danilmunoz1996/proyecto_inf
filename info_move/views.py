@@ -98,7 +98,7 @@ def VerPerfilUsuario(request,pk):
 	return render(request, 'perfil_usuario.html', {'perfil': info_perfil})
 
 def debugger(request):
-	return render(request, 'lista.html', {})
+	return render(request, 'base_loggeado.html', {})
 
 def Buscador(request):
 	if request.method == 'POST':

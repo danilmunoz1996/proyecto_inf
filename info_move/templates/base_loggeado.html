@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html  >
+<head>
+  <!-- Site made with Mobirise Website Builder v4.10.15, https://mobirise.com -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Mobirise v4.10.15, mobirise.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="{% static 'images/infomove.png' %}" type="image/x-icon">
+  <meta name="description" content="">
+  
+  <title>Home</title>
+  <link rel="stylesheet" href="{% static 'web/assets/mobirise-icons/mobirise-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-grid.min.css' %}">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-reboot.min.css' %}">
+  <link rel="stylesheet" href="{% static 'tether/tether.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dropdown/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'theme/css/style.css' %}">
+  <link href="{% static 'mobirise/css/mbr-additional.css' %}"><link rel="stylesheet" href="{% static 'mobirise/css/mbr-additional.css' %}" type="text/css">
+
+  <link rel="stylesheet" href="{% static 'socicon/css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'tether/tether.min.css' %}">
+  <link rel="stylesheet" href="{% static 'as-pie-progress/css/progress.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'theme/css/rating-stars.css' %}">
+  <link rel="stylesheet" href="{% static 'perfil/css/style.css' %}">
+
+</head>
+<body>
+
+<!--Menu-->
+  <section class="menu cid-rDBOLuFGKW" once="menu" id="menu1-b">
+
+    
+
+    <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        <div class="menu-logo">
+            <div class="navbar-brand">
+                <span class="navbar-logo">
+                    <a href="{% url 'home' %}">
+                         <img src="{% static 'images/infomove.png' %}" alt="Mobirise" title="" style="height: 3.8rem;">
+                    </a>
+                </span>
+                <span class="navbar-caption-wrap">
+                   <div id="loginContainer">
+                    <a class="navbar-caption text-white display-4" href="{% url 'home' %}">InfoMove</a>
+                    <br>
+                          <a id="loginButton" class="tablink" onclick="openLink(event, 'Usuario');"><span>Usuario</span></a>   
+                            <div id="loginBox">                
+                              <form id="loginForm">
+                                <fieldset id="body">
+                            <div id ="Usuario" class="user-info myLink">
+                              <h4>Hello,<a href="#"> {{user.username}}</a></h4>
+                              <ul>
+                              <li class="profile active"><a href="{% url 'VerPerfilUsuario' user.rut }">Perfil </a></li>
+                              <li class="logout"><a href="{% url 'logout'%}"> Logout</a></li>
+                              <div class="clear"></div>   
+                            </ul>
+                          </div>                                  
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>    
+                </span>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
+              <li class="nav-item">
+                <a class="nav-link link text-white display-4" href="{% url 'home' %}">
+                  <span class="mbri-home mbr-iconfont mbr-iconfont-btn"></span>Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link link text-white display-4" href="{% url 'Buscador' %}">
+                  <span class="mbri-star mbr-iconfont mbr-iconfont-btn"></span>Valorar</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link link text-white display-4" href="{% url 'Buscador' %}">
+                  <span class="mbri-search mbr-iconfont mbr-iconfont-btn"></span>Buscar micros</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link link text-white display-4" href="{% url 'ComentariosChofer' %}">
+                  <span class="mbri-clock mbr-iconfont mbr-iconfont-btn"></span>Recientes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link link text-white display-4" href="{% url 'ListaMicros' %}">
+                  <span class="mbri-alert mbr-iconfont mbr-iconfont-btn"></span>Avisos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link link text-white display-4" href="{% url 'signup' %}">
+                  <span class="mbri-question mbr-iconfont mbr-iconfont-btn"></span></a>
+              </li>
+            </ul>
+            
+        </div>
+    </nav>
+</section>
+
+{% block content %}
+
+{% endblock %}
+
+<!--FOOTERS-->
+<section once="footers" class="cid-rDwhxeLEUp" id="footer7-a">
+
+    <div class="container">
+        <div class="media-container-row align-center mbr-white">
+            <div class="row row-links">
+                <ul class="foot-menu">
+                    
+                
+                  <li class="foot-menu-item mbr-fonts-style display-7">
+                        <a class="text-white mbr-bold" href="#" target="_blank">Home</a>
+                    </li><li class="foot-menu-item mbr-fonts-style display-7">
+                        <a class="text-white mbr-bold" href="#" target="_blank">Contacto</a>
+                    </li></ul>
+            </div>
+           
+            <div class="row row-copirayt">
+                <p class="mbr-text mb-0 mbr-fonts-style mbr-white align-center display-7">
+                    © Copyright 2019 - All Rights Reserved
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+function openLink(evt, linkName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("myLink");
+  tablinks = document.getElementsByClassName("active tablink");
+  if(document.getElementById("loginBox").style.display == "block"){
+    document.getElementById("loginBox").style.display = "none";
+  }
+  else{
+  document.getElementById("loginBox").style.display = "block";
+}
+}
+</script>
+<!--JS-->
+  <script src="{% static 'web/assets/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'popper/popper.min.js' %}"></script>
+  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'tether/tether.min.js' %}"></script>
+  <script src="{% static 'smoothscroll/smooth-scroll.js' %}"></script>
+  <script src="{% static 'dropdown/js/nav-dropdown.js' %}"></script>
+  <script src="{% static 'dropdown/js/navbar-dropdown.js' %}"></script>
+  <script src="{% static 'touchswipe/jquery.touch-swipe.min.js' %}"></script>
+  <script src="{% static 'theme/js/script.js' %}"></script>
+  
+  <script src="{% static 'as-pie-progress/jquery-as-pie-progress.min.js' %}"></script>
+  <script src="{% static 'smoothscroll/smooth-scroll.js' %}"></script>
+
+  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  
+</body>
+</html>

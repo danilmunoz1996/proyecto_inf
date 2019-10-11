@@ -64,8 +64,6 @@ body{
 #loginContainer {
     position:relative;
     float:left;
-    padding-right:10px;
-    padding-top:15px;
 }
 /* Login Button */
 #loginButton { 
@@ -80,7 +78,7 @@ body{
     font-size:1em; 
     background:url(../images/loginArrow.png) no-repeat 26px 8px;
     display:block;
-    padding: 0 30px 0 0;
+    padding: 0 0 0 0;
     font-family: 'ambleregular';
 }
 #loginButton.active span {
@@ -89,8 +87,8 @@ body{
 /* Login Box */
 #loginBox {
     position:absolute;
-    top:53px;
-    right:10px;
+    top:43px;
+    right:-10px;
     display:none;
     z-index:29;
 }

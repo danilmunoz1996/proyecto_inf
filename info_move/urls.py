@@ -1,10 +1,12 @@
 from django.urls import path
 from django.conf.urls import url, include
+from django.contrib.auth import views as auth_views #Para importar un login y logout automatico de Django
 from .views import *
 from . import views
 
 urlpatterns = [
 	path('signup', signup, name='signup'),
+    url(r'logout$', auth_views.LogoutView, {'next_page': '/home'}, name="logout"),
     path('', home, name = 'home'),
     path('home', home, name = 'home'),
     path('ListaMicros', ListaMicros, name = 'ListaMicros'),
