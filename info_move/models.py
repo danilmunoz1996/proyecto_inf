@@ -152,8 +152,8 @@ class SearchResultsView(ListView):
 	model = Empresa
 	template_name = 'Empresa_results.html'
 
-	def getqueryset(self):
+	def get_queryset(self):
 		query = self.request.GET.get('q')
-		object_list = Empresa.objects.filter(Q(nombre__icontanins = query))
+		object_list = Empresa.objects.filter(Q(nombre__icontains = query))
 		return object_list
 
